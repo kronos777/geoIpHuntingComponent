@@ -179,16 +179,9 @@ class GeoIpHuntingComponent extends CBitrixComponent implements \Bitrix\Main\Eng
 	 * @return void OR string
 	*/
 	
-	private function addDataInHlBlock($dataResponse)
+	private function addDataInHlBlock($data_block)
 	{
-		
-		$data_block = array(
-						"UF_IP"=>$dataResponse->ip,
-						"UF_COUNTRY"=>$dataResponse->country_name,
-						"UF_CITY"=>$dataResponse->city,
-						"UF_CONTINENT"=>$dataResponse->continent_name
-					);
-		
+			
 		if(!Loader::includeModule("highloadblock")) {
 			
 			$data = array("WARNING_DATA" => "Модуль highloadblock не установлен.");
@@ -251,7 +244,16 @@ class GeoIpHuntingComponent extends CBitrixComponent implements \Bitrix\Main\Eng
 			
 			if($checkResponseRemoteServer) {
 				
-				$this->addDataInHlBlock($dataResponse);		
+					$data_block = array(
+						"UF_IP"=>$dataResponse->ip,
+						"UF_COUNTRY"=>$dataResponse->country_name,
+						"UF_CITY"=>$dataResponse->city,
+						"UF_CONTINENT"=>$dataResponse->continent_name
+					);
+				
+				$this->addDataInHlBlock($data_block);		
+				
+				return $data_block;
 				
 			} else {
 				
@@ -264,7 +266,7 @@ class GeoIpHuntingComponent extends CBitrixComponent implements \Bitrix\Main\Eng
 			
 		}
 
-		return $data_for_block;
+		
 
 	}
 	
